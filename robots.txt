@@ -1,0 +1,13 @@
+# robots.txt — sujit-gautam.com.np
+# Production SEO configuration
+
+User-agent: *
+Allow: /
+
+# Block sensitive or development files
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.env
+
+# Sitemap location
+Sitemap: https://sujit-gautam.com.np/sitemap.xml
