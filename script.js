@@ -23,7 +23,7 @@ if (themeBtn) {
 
 /* ── Typewriter ── */
 const typedEl = document.getElementById('typed');
-const words = ['Software Engineering Student', 'Web Developer', 'Problem Solver', 'BSc at PCPS College'];
+const words = ['Software Engineering Student', 'Learner', 'Developer (in progress),];
 let wi = 0, ci = 0, deleting = false;
 function typeLoop() {
   if (!typedEl) return;
