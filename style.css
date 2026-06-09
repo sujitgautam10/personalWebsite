@@ -662,13 +662,13 @@ img { display: block; max-width: 100%; }
 
 /* ── FOOTER ── */
 .footer {
-  border-top: 1px solid var(--bdr); padding: 14px 5%;
+  border-top: 1px solid var(--bdr); padding: 16px 5%;
   background: var(--bg3); flex-shrink: 0;
 }
 .footer-inner {
   max-width: 1060px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: center;
-  gap: 16px; flex-wrap: wrap;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 12px;
 }
 .footer-copy  { font-size: 11.5px; color: var(--txt3); }
 .footer-loc   { font-size: 11.5px; color: var(--txt3); }
