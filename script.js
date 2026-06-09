@@ -23,7 +23,7 @@ if (themeBtn) {
 
 /* ── Typewriter ── */
 const typedEl = document.getElementById('typed');
-const words = ['Software Engineering Student', 'Web Developer (in progress)', 'Learner'];
+const words = ['Software Engineering Student', 'Web Developer', 'Problem Solver', 'BSc at PCPS College'];
 let wi = 0, ci = 0, deleting = false;
 function typeLoop() {
   if (!typedEl) return;
@@ -63,20 +63,41 @@ if (sections.length) {
   sections.forEach(s => obs.observe(s));
 }
 
-/* ── Scroll to section ── */
+/* ── Scroll to section — mobile-safe with scroll-snap ── */
 function goTo(id) {
   const el = document.getElementById(id);
-  if (el && wrap) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (!el || !wrap) return;
+  /* On mobile, smooth scroll inside a snap container can be blocked.
+     Use instant scroll first so snap locks correctly, then let snap animate. */
+  const isMobile = window.innerWidth <= 768;
+  if (isMobile) {
+    /* Temporarily disable snap, jump to position, re-enable */
+    wrap.style.scrollSnapType = 'none';
+    wrap.scrollTop = el.offsetTop;
+    requestAnimationFrame(() => {
+      wrap.style.scrollSnapType = '';
+    });
+  } else {
+    wrap.scrollTo({ top: el.offsetTop, behavior: 'smooth' });
+  }
 }
 
+/* Nav links — use both click and touchend for mobile reliability */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
+  const handler = e => {
     const id = a.getAttribute('href').slice(1);
     if (!id || !document.getElementById(id)) return;
-    e.preventDefault(); closeMenu(); goTo(id);
-  });
+    e.preventDefault();
+    e.stopPropagation();
+    goTo(id);
+  };
+  a.addEventListener('click', handler);
+  a.addEventListener('touchend', handler, { passive: false });
 });
-sideDots.forEach(b => b.addEventListener('click', () => goTo(b.dataset.t)));
+sideDots.forEach(b => {
+  b.addEventListener('click', () => goTo(b.dataset.t));
+  b.addEventListener('touchend', e => { e.preventDefault(); goTo(b.dataset.t); }, { passive: false });
+});
 
 /* ── Mobile menu — disabled (nav is always visible on all screen sizes) ── */
 function closeMenu() {} // no-op kept for any legacy calls
@@ -141,6 +162,18 @@ function startCooldown() {
     rem--;
   };
   tick(); coolTimer = setInterval(tick, 1000);
+}
+
+/* ── Mobile keyboard fix — scroll focused input above keyboard ── */
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => {
+    const focused = document.activeElement;
+    if (focused && (focused.tagName === 'INPUT' || focused.tagName === 'TEXTAREA')) {
+      setTimeout(() => {
+        focused.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  });
 }
 
 if (form) {
