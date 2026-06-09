@@ -35,6 +35,36 @@ function typeLoop() {
 }
 setTimeout(typeLoop, 900);
 
+/* ── Nepal Real Time (UTC+5:45) ── */
+function updateNepalTime() {
+  const el = document.getElementById('npl-time');
+  if (!el) return;
+  const now = new Date();
+  /* Nepal is UTC+5:45 — add 5h 45m to UTC */
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  const npl = new Date(utc + (5 * 60 + 45) * 60000);
+
+  const days   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  const day  = days[npl.getDay()];
+  const date = npl.getDate();
+  const mon  = months[npl.getMonth()];
+  const yr   = npl.getFullYear();
+
+  let h = npl.getHours();
+  const m   = String(npl.getMinutes()).padStart(2, '0');
+  const s   = String(npl.getSeconds()).padStart(2, '0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+
+  el.textContent = `${day}, ${date} ${mon} ${yr}  ${h}:${m}:${s} ${ampm} NPT`;
+}
+updateNepalTime();
+setInterval(updateNepalTime, 1000);
+
+
+
 /* ── Scroll container ── */
 const wrap = document.getElementById('scrollWrap');
 
