@@ -197,7 +197,20 @@ img { display: block; max-width: 100%; }
   -webkit-overflow-scrolling: touch;
 }
 .alt-sec { background: var(--bg2); }
-.contact-sec { justify-content: space-between; padding-bottom: 0; }
+.contact-sec {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 0;
+  background: var(--bg);
+}
+.contact-inner {
+  flex: 1;
+  padding: calc(var(--nav-h) + 48px) 5% 24px;
+  max-width: 1060px;
+  margin: 0 auto;
+  width: 100%;
+}
 .container { max-width: 1060px; margin: 0 auto; width: 100%; }
 
 /* ── SECTION LABELS ── */
@@ -252,11 +265,17 @@ img { display: block; max-width: 100%; }
 /* badge */
 .hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
+  flex-wrap: wrap; justify-content: center;  /* wrap on tiny screens */
   border: 1px solid rgba(108,99,255,0.25);
   background: rgba(108,99,255,0.07);
-  border-radius: 999px; padding: 6px 16px;
+  border-radius: 16px; padding: 6px 16px;
   font-size: 11.5px; font-weight: 600; color: var(--acc2);
   margin-bottom: 32px; letter-spacing: 0.02em;
+  max-width: 100%;   /* never overflow parent */
+}
+#npl-time {
+  white-space: nowrap;  /* time string itself never breaks mid-word */
+  font-variant-numeric: tabular-nums; /* digits same width — no jitter */
 }
 .hero-badge-dot {
   width: 6px; height: 6px; border-radius: 50%;
@@ -385,6 +404,23 @@ img { display: block; max-width: 100%; }
 .stat-l { font-size: 9.5px; color: var(--txt3); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
 .stat-div { width: 1px; height: 30px; background: var(--bdr2); }
 
+/* Hero quote */
+.hero-quote {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 14px 24px;
+  background: var(--sur); border: 1px solid var(--bdr); border-radius: var(--r);
+  max-width: 520px;
+}
+.quote-text {
+  font-size: 13px; color: var(--txt2); line-height: 1.6; text-align: center;
+  font-style: normal; letter-spacing: 0.01em;
+}
+.quote-author {
+  font-size: 11px; color: var(--txt3); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  font-family: var(--mono);
+}
+
 .scroll-cue {
   position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 6px;
@@ -406,7 +442,7 @@ img { display: block; max-width: 100%; }
 .about-img-wrap {
   position: relative;
   width: 100%;
-  height: 440px;
+  height: 480px;
   border-radius: 6px; overflow: hidden;
   box-shadow: 0 20px 60px rgba(0,0,0,0.35);
   border: 1px solid var(--bdr);
@@ -626,13 +662,13 @@ img { display: block; max-width: 100%; }
 
 /* ── FOOTER ── */
 .footer {
-  border-top: 1px solid var(--bdr); padding: 16px 5%;
+  border-top: 1px solid var(--bdr); padding: 14px 5%;
   background: var(--bg3); flex-shrink: 0;
 }
 .footer-inner {
   max-width: 1060px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 12px;
+  display: flex; align-items: center; justify-content: center;
+  gap: 16px; flex-wrap: wrap;
 }
 .footer-copy  { font-size: 11.5px; color: var(--txt3); }
 .footer-loc   { font-size: 11.5px; color: var(--txt3); }
@@ -763,10 +799,10 @@ img { display: block; max-width: 100%; }
   .about-photo-col {
     flex-shrink: 0;
   }
-  /* Image: short fixed height, full width, face centred */
+  /* Image: taller on mobile so face is properly visible */
   .about-img-wrap {
     width: 100%;
-    height: 160px;
+    height: 200px;
     aspect-ratio: unset;
     border-radius: 10px;
     box-shadow: 0 8px 24px rgba(0,0,0,0.4);
@@ -809,29 +845,33 @@ img { display: block; max-width: 100%; }
     margin-top: auto;
   }
 
-  /* ── CONTACT: fits screen — keyboard-aware via dvh ── */
+  /* ── CONTACT: exact 100dvh, footer pinned at bottom ── */
   .contact-sec {
     height: 100dvh;
-    height: 100vh; /* fallback */
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    padding: calc(var(--nav-h) + 12px) 5% 0;
     overflow: hidden;
-    gap: 0;
   }
-  /* sec-tag + sec-title above grid */
-  .contact-sec .sec-tag  { margin-bottom: 4px; }
-  .contact-sec .sec-title { margin-bottom: 12px; font-size: 22px; }
+  .contact-inner {
+    flex: 1;
+    padding: calc(var(--nav-h) + 10px) 5% 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+  .contact-inner .sec-tag  { margin-bottom: 3px; }
+  .contact-inner .sec-title { margin-bottom: 10px; font-size: 20px; }
 
   .contact-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 8px;
     flex: 1;
     overflow: hidden;
-    padding-bottom: 4px;
+    min-height: 0;
   }
-  .contact-intro { font-size: 12px; line-height: 1.5; margin-bottom: 8px; }
+  .contact-intro { font-size: 12px; line-height: 1.5; margin-bottom: 6px; }
   .clinks { gap: 5px; }
   .clink { padding: 7px 10px; }
   .clink-ic { width: 26px; height: 26px; border-radius: 6px; }
@@ -840,28 +880,35 @@ img { display: block; max-width: 100%; }
   .clink-val { font-size: 11px; }
   .contact-form {
     padding: 10px;
-    gap: 7px;
+    gap: 6px;
     border-radius: 10px;
-    margin-bottom: 12px;  /* gap between form and footer */
   }
   .form-row { grid-template-columns: 1fr 1fr; gap: 7px; }
-  .fg input, .fg textarea {
-    padding: 14px 10px 5px;
-    font-size: 12px;
-  }
-  .fg textarea { min-height: 52px; max-height: 72px; resize: none; }
+  .fg input, .fg textarea { padding: 14px 10px 5px; font-size: 12px; }
+  .fg textarea { min-height: 50px; max-height: 68px; resize: none; }
   .fg label { font-size: 11px; top: 10px; left: 10px; }
   .fg input:not(:placeholder-shown) + label,
   .fg input:focus + label,
   .fg textarea:not(:placeholder-shown) + label,
   .fg textarea:focus + label { top: 2px; font-size: 8px; }
-  .ferr { font-size: 9px; min-height: 11px; }
+  .ferr { font-size: 9px; min-height: 10px; }
   .form-submit { padding: 9px 14px; font-size: 12px; }
-  .countdown { font-size: 9.5px; min-height: 11px; }
+  .countdown { font-size: 9.5px; min-height: 10px; }
 
-  /* Footer anchored at bottom with visible gap from form */
-  .footer { padding: 10px 5%; flex-shrink: 0; border-top: 1px solid var(--bdr); margin-top: 4px; }
-  .footer-inner { flex-direction: row; align-items: center; justify-content: space-between; gap: 8px; }
+  /* Footer — always last, no extra gap below it */
+  .footer {
+    flex-shrink: 0;
+    padding: 9px 5%;
+    border-top: 1px solid var(--bdr);
+    background: var(--bg3);
+    margin: 0;
+  }
+  .footer-inner {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
   .footer-loc { display: none; }
   .footer-copy { font-size: 10.5px; }
   .soc { width: 28px; height: 28px; border-radius: 6px; }
@@ -882,9 +929,9 @@ img { display: block; max-width: 100%; }
   .proj-body h3 { font-size: 14px; }
   .proj-body p { font-size: 12px; line-height: 1.6; margin-bottom: 8px; }
   .proj-tags span { font-size: 10px; }
-  .hero-stats { gap: 10px; padding: 12px 14px; }
-  .stat-n { font-size: 15px; }
-  .stat-l { font-size: 7.5px; }
+  .hero-quote { padding: 10px 16px; max-width: 100%; }
+  .quote-text { font-size: 12px; }
+  .quote-author { font-size: 10px; }
   .hero-name { font-size: clamp(36px, 11vw, 60px); }
 }
 
