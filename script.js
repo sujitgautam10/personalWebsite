@@ -2,15 +2,21 @@
 
 /* ─────────────────────────────────────────
    PRELOADER
+   - Fires on DOMContentLoaded (doesn't wait for fonts/CDN)
+   - Hard cap: hides after 1200ms max no matter what
 ───────────────────────────────────────── */
-window.addEventListener('load', () => {
+function hidePreloader() {
   const pre = document.getElementById('preloader');
-  if (!pre) return;
-  setTimeout(() => {
-    pre.classList.add('gone');
-    initReveal();
-  }, 700);
+  if (!pre || pre.classList.contains('gone')) return;
+  pre.classList.add('gone');
+  initReveal();
+}
+/* Hide as soon as DOM is ready — fast path */
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(hidePreloader, 300);
 });
+/* Absolute fallback: never show longer than 1.2s */
+setTimeout(hidePreloader, 1200);
 
 /* ─────────────────────────────────────────
    THEME
