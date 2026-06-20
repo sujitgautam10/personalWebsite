@@ -36,7 +36,7 @@ themeBtn?.addEventListener('click', () => {
    TYPEWRITER
 ───────────────────────────────────────── */
 const typedEl  = document.getElementById('typed');
-const words    = ['Software Engineering Student', 'Web Developer', 'Problem Solver', 'BSc at PCPS College'];
+const words    = ['Software Engineering Student', 'Web Developer (in progress)', 'Learner'];
 let wi = 0, ci = 0, deleting = false;
 
 function typeLoop() {
