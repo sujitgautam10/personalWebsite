@@ -404,6 +404,15 @@ img { display: block; max-width: 100%; }
 }
 .skill-tile img { width: 56px; height: 56px; pointer-events: none; }
 
+/* GitHub icon is black SVG — invert to white in dark mode */
+[data-theme="dark"] .skill-tile img[alt="GitHub"] {
+  filter: invert(1) brightness(2);
+}
+/* MySQL icon also looks dim in dark — brighten slightly */
+[data-theme="dark"] .skill-tile img[alt="MySQL"] {
+  filter: brightness(1.3);
+}
+
 /* ── PROJECTS ── */
 .proj-list { display: flex; flex-direction: column; gap: 14px; }
 .proj-item {
