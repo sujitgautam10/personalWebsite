@@ -1,8 +1,17 @@
 import * as BadWordsModule from 'https://esm.sh/bad-words';
-import { ABC } from './words.example.js';
 
 const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
 const filter = new Filter();
+
+/* words.js is git-ignored (it holds the real banned-word list) so it
+   won't exist on a fresh clone. Try it first; fall back to the tracked
+   words.example.js template so the site still works without it. */
+let ABC = [];
+try {
+  ({ ABC } = await import('./words.js'));
+} catch {
+  ({ ABC } = await import('./words.example.js'));
+}
 filter.addWords(...ABC);
 
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
