@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
 
   <!-- ═══ PRIMARY SEO ═══ -->
   <title>Sujit Gautam | Portfolio</title>
@@ -19,8 +19,8 @@
   <meta name="ICBM" content="27.6588, 85.3247" />
 
   <!-- ═══ THEME ═══ -->
-  <meta name="theme-color" content="#6c63ff" />
-  <meta name="msapplication-TileColor" content="#6c63ff" />
+  <meta name="theme-color" content="#c1552f" />
+  <meta name="msapplication-TileColor" content="#c1552f" />
 
   <!-- ═══ FAVICON ═══ -->
   <link rel="icon" type="image/x-icon"    href="favicon.ico" />
@@ -83,12 +83,13 @@
         }
       }
     ],
-    "knowsAbout": ["Java", "Python", "JavaScript", "HTML5", "CSS3", "Web Development", "Software Engineering"],
+    "knowsAbout": ["Java", "Python", "JavaScript", "React", "Node.js", "HTML5", "CSS3", "Web Development", "Software Engineering"],
     "knowsLanguage": ["English", "Nepali", "Hindi"],
     "sameAs": [
       "https://www.linkedin.com/in/sujitgautam/",
       "https://instagram.com/sujit_gautam10",
-      "https://facebook.com/sujitgautam10"
+      "https://facebook.com/sujitgautam10",
+      "https://github.com/"
     ]
   }
   </script>
@@ -112,16 +113,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
 
-  <!-- Critical CSS loads synchronously -->
-  <link rel="preload" href="style.css" as="style" />
-  <link rel="stylesheet" href="style.css" />
+  <!-- Critical CSS loads synchronously — versions MUST match exactly -->
+  <link rel="preload" href="style.css?v=30" as="style" />
+  <link rel="stylesheet" href="style.css?v=30" />
 
   <!-- Fonts load async — display=swap means text shows immediately in fallback font -->
   <link rel="preload" as="style"
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@6..144,400;6..144,500;6..144,600;6..144,700;6..144,800&family=Work+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
         onload="this.onload=null;this.rel='stylesheet'" />
   <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@6..144,400;6..144,500;6..144,600;6..144,700;6..144,800&family=Work+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
   </noscript>
 
   <!-- Icons load async — no render blocking -->
@@ -139,6 +140,7 @@
   <span class="pl-text">SG</span>
 </div>
 
+<div class="nav-scrim" aria-hidden="true"></div>
 <header class="nav" id="nav">
   <a href="#home" class="nav-logo" aria-label="Home">SG<span class="accent-dot">.</span></a>
   <nav class="nav-links" aria-label="Main navigation">
@@ -153,9 +155,6 @@
     <button class="theme-btn" id="themeBtn" aria-label="Toggle theme">
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
-    </button>
-    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-      <span></span><span></span><span></span>
     </button>
   </div>
 </header>
@@ -173,50 +172,69 @@
 
   <!-- HOME -->
   <section class="snap-sec hero-sec" id="home">
-    <div class="orb o1"></div>
-    <div class="orb o2"></div>
-    <div class="hero-grid-bg" aria-hidden="true"></div>
+    <div class="hero-bg" aria-hidden="true">
+      <div class="hero-grid-bg"></div>
+    </div>
 
-    <div class="hero-center">
-      <div class="hero-badge reveal">
-        <span class="hero-badge-dot"></span>
-        Online &nbsp;&middot;&nbsp; <span id="npl-time"></span>
+    <div class="hero-wrap">
+      <div class="hero-left">
+        <h1 class="hero-name reveal" aria-label="Sujit Gautam">Sujit Gautam</h1>
+
+        <h2 class="hero-title reveal">
+          Still Googling things I learned last week, but the sites
+          <span class="hand-underline">
+            ship anyway
+            <svg class="hu-svg" viewBox="0 0 140 20" preserveAspectRatio="none" aria-hidden="true">
+              <path d="M3 12 C 30 5, 55 16, 78 9 S 120 4, 137 11" />
+            </svg>
+          </span>.
+        </h2>
+
+        <p class="hero-desc-new reveal">
+          A Software Engineering student from Nepal with a passion for technology and a curiosity for how things work. <br>Every challenge is an opportunity to learn, improve, and grow.
+        </p>
+<div class="hero-cta reveal">
+  <a href="#contact" class="btn-primary">
+    <span>Get In Touch</span>
+  </a>
+  <button type="button" class="btn-secondary" id="cvBtn">
+    <span>View my CV</span>
+  </button>
+</div>
+
+        <div class="hero-socials reveal" aria-label="Social links">
+          <a href="https://www.linkedin.com/in/sujitgautam/" target="_blank" rel="noopener" class="soc" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="https://instagram.com/sujit_gautam10" target="_blank" rel="noopener" class="soc" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="17" height="17"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          </a>
+          <a href="https://facebook.com/sujitgautam10" target="_blank" rel="noopener" class="soc" aria-label="Facebook">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+          </a>
+          <a href="https://github.com/yourusername" target="_blank" rel="noopener" class="soc" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="17" height="17">
+              <path d="M12 .5C5.65.5.5 5.65.5 12a11.5 11.5 0 008 10.93c.58.11.79-.25.79-.56v-2.18c-3.25.71-3.94-1.39-3.94-1.39-.53-1.34-1.29-1.69-1.29-1.69-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.71 1.26 3.37.96.1-.75.4-1.26.73-1.55-2.6-.3-5.34-1.3-5.34-5.79 0-1.28.46-2.33 1.2-3.15-.12-.3-.52-1.52.11-3.16 0 0 .98-.31 3.2 1.2a11.2 11.2 0 015.82 0c2.22-1.51 3.2-1.2 3.2-1.2.63 1.64.23 2.86.11 3.16.75.82 1.2 1.87 1.2 3.15 0 4.5-2.74 5.49-5.35 5.78.42.36.8 1.08.8 2.18v3.23c0 .31.21.68.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/>
+            </svg>
+          </a>
+        </div>
       </div>
 
-      <h1 class="hero-name reveal">
-        <span class="hero-name-first">Sujit</span>
-        <span class="hero-name-last">Gautam</span>
-      </h1>
-
-      <div class="hero-typed-row reveal">
-        <span class="typed-label">I am a </span><span id="typed"></span><span class="typed-cursor">|</span>
-      </div>
-
-      <p class="hero-desc reveal">Turning ideas into clean web experiences.</p>
-
-      <div class="hero-btns reveal">
-        <a href="https://facebook.com/sujitgautam10" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="Facebook">
-          <i class="ri-facebook-fill"></i>
-        </a>
-        <a href="https://instagram.com/sujit_gautam10" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="Instagram">
-          <i class="ri-instagram-line"></i>
-        </a>
-        <a href="https://www.linkedin.com/in/sujitgautam/" target="_blank" rel="noopener noreferrer" class="icon-btn" aria-label="LinkedIn">
-          <i class="ri-linkedin-fill"></i>
-        </a>
-      </div>
-
-      <div class="hero-quote reveal">
-        <span class="quote-text">"Every expert was once a beginner who kept going."</span>
-        <span class="quote-author">— Helen Hayes</span>
+      <div class="hero-right reveal">
+        <div class="hero-photo-stage" id="heroPhotoStage">
+          <span class="photo-block" aria-hidden="true"></span>
+          <img src="sujit3.jpg" alt="Sujit Gautam, mid-laugh, outside PCPS College" class="hero-photo" id="heroPhoto" width="900" height="1347" fetchpriority="high" />
+        </div>
+        <span class="photo-caption">console.log("Hello, World!");</span>
       </div>
     </div>
 
     <div class="scroll-cue" aria-hidden="true">
-      <span>Scroll</span>
+      <span>Explore More </span>
       <div class="cue-line"></div>
     </div>
   </section>
+
 
   <!-- ABOUT -->
   <section class="snap-sec content-sec" id="about">
@@ -224,7 +242,7 @@
       <div class="about-grid">
         <div class="about-photo-col">
           <div class="about-img-wrap reveal">
-            <img src="sujit.jpg" alt="Sujit Gautam — Software Engineering Student from Lalitpur, Nepal" class="about-photo" />
+            <img src="sujit2.jpg" alt="Sujit Gautam — Software Engineering Student from Lalitpur, Nepal" class="about-photo" />
           </div>
         </div>
         <div class="about-text">
@@ -236,11 +254,12 @@
             <p><strong>Status:</strong> Learning &amp; Building</p>
             <p><strong>Focus:</strong> Clean UI &amp; Web Experiences</p>
             <p><strong>Goal:</strong> Building real-world projects</p>
+              <p><strong>Tech Stack:</strong> HTML, CSS, JavaScript, React, Node.js</p>
           </div>
           <div class="about-paras reveal">
             <p>I'm a Software Engineering student who enjoys building clean and simple web experiences.</p>
             <p>I focus on turning ideas into functional websites and applications that are both visually clean and easy to use, with attention to structure and user experience.</p>
-            <p>I'm continuously learning through projects and open to new ideas and opportunities in web development.</p>
+            <p>I'm continuously learning through projects and open to <strong>new ideas</strong> and <strong>opportunities</strong> in web development.</p>
           </div>
           <a href="#contact" class="btn-about-contact reveal">Contact Me</a>
         </div>
@@ -251,10 +270,8 @@
   <!-- SKILLS -->
   <section class="snap-sec content-sec alt-sec" id="skills">
     <div class="container">
-      <div class="sec-tag reveal">What I Know</div>
-      <h2 class="sec-title reveal">Skills</h2>
+      <h2 class="sec-title reveal">Technology</h2>
       <div class="skills-grid">
-        <!-- FRONTEND -->
         <div class="skill-tile reveal" title="HTML5">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" width="56" height="56" loading="lazy" />
         </div>
@@ -264,22 +281,21 @@
         <div class="skill-tile reveal" title="JavaScript">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" width="56" height="56" loading="lazy" />
         </div>
-        <!-- STYLING -->
         <div class="skill-tile reveal" title="Tailwind CSS">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" alt="Tailwind CSS" width="56" height="56" loading="lazy" />
         </div>
-        <!-- PROGRAMMING -->
         <div class="skill-tile reveal" title="Java">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" width="56" height="56" loading="lazy" />
         </div>
         <div class="skill-tile reveal" title="Python">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="56" height="56" loading="lazy" />
         </div>
-        <!-- DATABASE -->
         <div class="skill-tile reveal" title="MySQL">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" width="56" height="56" loading="lazy" />
         </div>
-        <!-- TOOLS -->
+        <div class="skill-tile reveal" title="MongoDB">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" width="56" height="56" loading="lazy" />
+        </div>
         <div class="skill-tile reveal" title="Git">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" width="56" height="56" loading="lazy" />
         </div>
@@ -293,7 +309,6 @@
   <!-- PROJECTS -->
   <section class="snap-sec content-sec" id="projects">
     <div class="container">
-      <div class="sec-tag reveal">What I've Built</div>
       <h2 class="sec-title reveal">Projects</h2>
       <div class="proj-list">
         <article class="proj-item reveal">
@@ -320,44 +335,50 @@
     </div>
   </section>
 
-  <!-- EDUCATION -->
   <section class="snap-sec content-sec alt-sec" id="education">
     <div class="container">
-      <div class="sec-tag reveal">My Path</div>
       <h2 class="sec-title reveal">Education</h2>
       <div class="edu-list">
-        <div class="edu-item reveal">
+
+        <!-- PCPS College -->
+        <a href="https://patancollege.edu.np/" target="_blank" rel="noopener noreferrer"
+           class="edu-item reveal block rounded-lg bg-neutral-100 hover:bg-neutral-200 hover:scale-[1.02] transition-transform duration-300 ease-in-out cursor-pointer">
           <div class="edu-logo-box">
             <img src="pcps.webp" alt="PCPS College Kupandole Lalitpur" loading="lazy" />
           </div>
           <div class="edu-detail">
-            <div class="edu-year">2025 – Present</div>
-            <h3>BSc (Hons) Software Engineering</h3>
-            <div class="edu-org">PCPS College</div>
-            <div class="edu-org-sub">Kupandole, Lalitpur</div>
-            <p>Studying for a Bachelor's degree in Software Engineering at PCPS, learning programming and building skills through practical projects.</p>
+            <div class="edu-year text-sm text-orange-700 font-semibold">2025 – Present</div>
+            <h3 class="text-lg font-bold">BSc (Hons) Software Engineering</h3>
+            <div class="edu-org font-semibold">PCPS College</div>
+            <div class="edu-org-sub text-gray-600">Kupandole, Lalitpur</div>
+            <p class="text-gray-700">Studying for a Bachelor's degree in Software Engineering at PCPS, learning programming and building skills through practical projects.</p>
           </div>
-        </div>
-        <div class="edu-item reveal">
+        </a>
+
+        <!-- Mohanmaya Secondary School -->
+        <a href="https://www.mohanmaya.edu.np/" target="_blank" rel="noopener noreferrer"
+           class="edu-item reveal block rounded-lg bg-neutral-100 hover:bg-neutral-200 hover:scale-[1.02] transition-transform duration-300 ease-in-out cursor-pointer">
           <div class="edu-logo-box edu-logo-circle">
             <img src="mohanmaya.webp" alt="Mohanmaya Secondary School Birtamode Jhapa" loading="lazy" />
           </div>
           <div class="edu-detail">
-            <div class="edu-year">2021 – 2025</div>
-            <h3>+2 Management &amp; SEE</h3>
-            <div class="edu-org">Mohanmaya Secondary School</div>
-            <div class="edu-org-sub">Birtamode, Jhapa</div>
-            <p>Completed SEE and +2 in Management, gained a strong academic foundation, and developed an interest in further studies.</p>
+            <div class="edu-year text-sm text-orange-700 font-semibold">2021 – 2025</div>
+            <h3 class="text-lg font-bold">+2 Management &amp; SEE</h3>
+            <div class="edu-org font-semibold">Mohanmaya Secondary School</div>
+            <div class="edu-org-sub text-gray-600">Birtamode, Jhapa</div>
+            <p class="text-gray-700">Completed SEE and +2 in Management, gained a strong academic foundation, and developed an interest in further studies.</p>
           </div>
-        </div>
+        </a>
+
       </div>
     </div>
   </section>
 
+
   <!-- CONTACT -->
   <section class="snap-sec contact-sec" id="contact">
     <div class="contact-inner">
-      <div class="sec-tag reveal">Let's Connect</div>
+
       <h2 class="sec-title reveal">Get In Touch</h2>
       <div class="contact-grid">
 
@@ -402,9 +423,9 @@
               <span class="ferr" role="alert"></span>
             </div>
           </div>
-          <div class="fg">
-            <textarea name="message" id="fm" placeholder=" " rows="4" required></textarea>
+          <div class="fg fg-textarea">
             <label for="fm">Message</label>
+            <textarea name="message" id="fm" placeholder="Tell me a bit about the opportunity, or just say hi..." rows="9" required></textarea>
             <span class="ferr" role="alert"></span>
           </div>
           <button type="submit" class="form-submit" id="submitBtn">
@@ -450,7 +471,39 @@
   <button class="sd"        data-t="education" aria-label="Education"></button>
   <button class="sd"        data-t="contact"   aria-label="Contact"></button>
 </nav>
+<button class="scroll-top-btn" id="scrollTopBtn" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+    <line x1="12" y1="19" x2="12" y2="5"/>
+    <polyline points="5 12 12 5 19 12"/>
+  </svg>
+</button>
 
-<script src="script.js"></script>
+<!-- CV modal — direct child of <body>, single instance only -->
+<div class="cv-modal" id="cvModal" aria-hidden="true" inert>
+  <div class="cv-modal-backdrop" data-cv-close></div>
+  <div class="cv-modal-box" role="dialog" aria-modal="true" aria-labelledby="cvModalTitle">
+    <button class="cv-modal-close" data-cv-close aria-label="Close">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+    <div class="cv-modal-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="30" height="30">
+        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="12" y1="18" x2="12" y2="12"/>
+        <line x1="9" y1="15" x2="15" y2="15"/>
+      </svg>
+    </div>
+    <h3 id="cvModalTitle" class="cv-modal-title">CV coming soon</h3>
+    <p class="cv-modal-text">My CV is being prepared and will be available soon.</p>
+    <a href="#contact" class="cv-modal-cta" data-cv-close>
+      <span>Contact me</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="13" height="13"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </a>
+  </div>
+</div>
+
+<script type="module" src="script.js?v=30"></script>
 </body>
 </html>
