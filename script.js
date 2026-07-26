@@ -1,5 +1,5 @@
 import * as BadWordsModule from 'https://esm.sh/bad-words';
-import { ABC } from './words.js';
+import { ABC } from './words.example.js';
 
 const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
 const filter = new Filter();
