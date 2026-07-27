@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import * as BadWordsModule from 'https://esm.sh/bad-words';
 
 const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
