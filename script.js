@@ -14,7 +14,7 @@ try {
   ({ ABC } = await import('./words.example.js'));
 }
 filter.addWords(...ABC);
-=======
+
 let ABC = [];
 let filter = { isProfane: () => false };
 
@@ -29,7 +29,7 @@ Promise.all([
 }).catch(err => {
   console.warn('Content filter failed to load; profanity check disabled for this session.', err);
 });
->>>>>>> b70a6a3 (fix: resolve responsive layout issues and finalize deployment readiness)
+
 
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
 function collapseSpelledOut(text) {
