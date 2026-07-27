@@ -471,7 +471,7 @@ function openCvModal() {
 function closeCvModal() {
   if (!cvModal || !wrap) return;
 
-  cvBtn?.focus({ preventScroll: true });   // was: cvBtn?.focus();
+  cvBtn?.focus({ preventScroll: true });
 
   cvModal.classList.remove('open');
   cvModal.setAttribute('aria-hidden', 'true');
