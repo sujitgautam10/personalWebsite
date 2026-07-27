@@ -1,31 +1,41 @@
 
-let ABC = [];
-let filter = { isProfane: () => false };
+import * as BadWordsModule from 'https://esm.sh/bad-words';
 
-Promise.all([
-  import('https://esm.sh/bad-words'),
-  import('./words.example.js')
-]).then(([BadWordsModule, wordsModule]) => {
-  const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
-  ABC = wordsModule.ABC || [];
-  filter = new Filter();
-  filter.addWords(...ABC);
-}).catch(err => {
-  console.warn('Content filter failed to load; profanity check disabled for this session.', err);
-});
+const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
+const filter = new Filter();
+
+/* Try the private words.js first.
+   If it doesn't exist (fresh clone), use the tracked template. */
+let ABC = [];
+try {
+  ({ ABC } = await import('./words.js'));
+} catch {
+  ({ ABC } = await import('./words.example.js'));
+}
+
+filter.addWords(...ABC);
 
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
+
 function collapseSpelledOut(text) {
-  return text.replace(/(?:[a-z][\s\-_.*])+[a-z]/g, match => match.replace(/[\s\-_.*]/g, ''));
+  return text.replace(/(?:[a-z][\s\-_.*])+[a-z]/g, match =>
+    match.replace(/[\s\-_.*]/g, '')
+  );
 }
 
 function hasInappropriateContent(text) {
   const lower = text.trim().toLowerCase();
   const collapsed = collapseSpelledOut(lower);
 
-  const containsBannedWord = ABC.some(word => collapsed.includes(word) || lower.includes(word));
+  const containsBannedWord = ABC.some(
+    word => collapsed.includes(word) || lower.includes(word)
+  );
 
-  return GREETING_ONLY_RE.test(lower) || filter.isProfane(lower) || containsBannedWord;
+  return (
+    GREETING_ONLY_RE.test(lower) ||
+    filter.isProfane(lower) ||
+    containsBannedWord
+  );
 }
 
 'use strict';
