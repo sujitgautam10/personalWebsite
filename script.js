@@ -15,22 +15,6 @@ try {
 }
 filter.addWords(...ABC);
 
-let ABC = [];
-let filter = { isProfane: () => false };
-
-Promise.all([
-  import('https://esm.sh/bad-words'),
-  import('./words.example.js')
-]).then(([BadWordsModule, wordsModule]) => {
-  const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
-  ABC = wordsModule.ABC || [];
-  filter = new Filter();
-  filter.addWords(...ABC);
-}).catch(err => {
-  console.warn('Content filter failed to load; profanity check disabled for this session.', err);
-});
-
-
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
 function collapseSpelledOut(text) {
   return text.replace(/(?:[a-z][\s\-_.*])+[a-z]/g, match => match.replace(/[\s\-_.*]/g, ''));
