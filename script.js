@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as BadWordsModule from 'https://esm.sh/bad-words';
 
 const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
@@ -13,6 +14,22 @@ try {
   ({ ABC } = await import('./words.example.js'));
 }
 filter.addWords(...ABC);
+=======
+let ABC = [];
+let filter = { isProfane: () => false };
+
+Promise.all([
+  import('https://esm.sh/bad-words'),
+  import('./words.example.js')
+]).then(([BadWordsModule, wordsModule]) => {
+  const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
+  ABC = wordsModule.ABC || [];
+  filter = new Filter();
+  filter.addWords(...ABC);
+}).catch(err => {
+  console.warn('Content filter failed to load; profanity check disabled for this session.', err);
+});
+>>>>>>> 5fff112 (fixed the error in the 1st line)
 
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
 function collapseSpelledOut(text) {
