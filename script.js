@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import * as BadWordsModule from 'https://esm.sh/bad-words';
 
 const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
@@ -13,6 +14,22 @@ try {
   ({ ABC } = await import('./words.example.js'));
 }
 filter.addWords(...ABC);
+=======
+let ABC = [];
+let filter = { isProfane: () => false };
+
+Promise.all([
+  import('https://esm.sh/bad-words'),
+  import('./words.example.js')
+]).then(([BadWordsModule, wordsModule]) => {
+  const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
+  ABC = wordsModule.ABC || [];
+  filter = new Filter();
+  filter.addWords(...ABC);
+}).catch(err => {
+  console.warn('Content filter failed to load; profanity check disabled for this session.', err);
+});
+>>>>>>> b70a6a3 (fix: resolve responsive layout issues and finalize deployment readiness)
 
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
 function collapseSpelledOut(text) {
@@ -128,6 +145,44 @@ sideDots.forEach(b => {
 });
 
 /* ─────────────────────────────────────────
+   MOBILE HAMBURGER MENU (≤480px only)
+───────────────────────────────────────── */
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileNav     = document.getElementById('mobileNav');
+
+function closeMobileNav() {
+  mobileNav?.classList.remove('open');
+  mobileNav?.setAttribute('aria-hidden', 'true');
+  hamburgerBtn?.classList.remove('active');
+  hamburgerBtn?.setAttribute('aria-expanded', 'false');
+}
+function openMobileNav() {
+  mobileNav?.classList.add('open');
+  mobileNav?.setAttribute('aria-hidden', 'false');
+  hamburgerBtn?.classList.add('active');
+  hamburgerBtn?.setAttribute('aria-expanded', 'true');
+}
+
+hamburgerBtn?.addEventListener('click', () => {
+  mobileNav?.classList.contains('open') ? closeMobileNav() : openMobileNav();
+});
+
+mobileNav?.querySelectorAll('.mn-link').forEach(link => {
+  link.addEventListener('click', closeMobileNav);
+  link.addEventListener('touchend', closeMobileNav, { passive: true });
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && mobileNav?.classList.contains('open')) closeMobileNav();
+});
+
+document.addEventListener('click', e => {
+  if (!mobileNav?.classList.contains('open')) return;
+  if (!mobileNav.contains(e.target) && e.target !== hamburgerBtn && !hamburgerBtn.contains(e.target)) {
+    closeMobileNav();
+  }
+});
+/* ─────────────────────────────────────────
    REVEAL ON SCROLL
 ───────────────────────────────────────── */
 function initReveal() {
@@ -220,15 +275,15 @@ document.querySelectorAll('[data-magnetic]').forEach(btn => {
 function revealFocusedField() {
   const f = document.activeElement;
   const isField = f && (f.tagName === 'INPUT' || f.tagName === 'TEXTAREA');
-  if (!isField) return;
+  if (!isField || !wrap) return;
   const vv = window.visualViewport;
   const rect = f.getBoundingClientRect();
   const visibleBottom = vv ? vv.height + vv.offsetTop : window.innerHeight;
   const visibleTop = vv ? vv.offsetTop : 0;
   if (rect.bottom > visibleBottom - 16) {
-    window.scrollBy({ top: rect.bottom - visibleBottom + 24, behavior: 'smooth' });
+    wrap.scrollBy({ top: rect.bottom - visibleBottom + 24, behavior: 'smooth' });
   } else if (rect.top < visibleTop + 16) {
-    window.scrollBy({ top: rect.top - visibleTop - 24, behavior: 'smooth' });
+    wrap.scrollBy({ top: rect.top - visibleTop - 24, behavior: 'smooth' });
   }
 }
 
@@ -386,11 +441,19 @@ if (scrollTopBtn) {
     }
   });
 
-  const goToTop = () => {
-    wrap.style.scrollSnapType = 'none';
+const goToTop = () => {
+  wrap.style.scrollSnapType = 'none';
+  wrap.style.overflow = 'hidden';   // halts any residual momentum/inertia scroll
+  wrap.scrollTop = 0;
+
+  requestAnimationFrame(() => {
     wrap.scrollTop = 0;
-    setTimeout(() => { wrap.style.scrollSnapType = ''; }, 500);
-  };
+    setTimeout(() => {
+      wrap.style.overflow = '';
+      wrap.style.scrollSnapType = '';
+    }, 500);
+  });
+};
 
   scrollTopBtn.addEventListener('click', goToTop);
   scrollTopBtn.addEventListener('touchend', e => { e.preventDefault(); goToTop(); }, { passive: false });
