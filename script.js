@@ -1,18 +1,17 @@
-import * as BadWordsModule from 'https://esm.sh/bad-words';
-
-const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
-const filter = new Filter();
-
-/* words.js is git-ignored (it holds the real banned-word list) so it
-   won't exist on a fresh clone. Try it first; fall back to the tracked
-   words.example.js template so the site still works without it. */
 let ABC = [];
-try {
-  ({ ABC } = await import('./words.js'));
-} catch {
-  ({ ABC } = await import('./words.example.js'));
-}
-filter.addWords(...ABC);
+let filter = { isProfane: () => false };
+
+Promise.all([
+  import('https://esm.sh/bad-words'),
+  import('./words.example.js')
+]).then(([BadWordsModule, wordsModule]) => {
+  const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
+  ABC = wordsModule.ABC || [];
+  filter = new Filter();
+  filter.addWords(...ABC);
+}).catch(err => {
+  console.warn('Content filter failed to load; profanity check disabled for this session.', err);
+});
 
 const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
 function collapseSpelledOut(text) {
@@ -27,7 +26,6 @@ function hasInappropriateContent(text) {
 
   return GREETING_ONLY_RE.test(lower) || filter.isProfane(lower) || containsBannedWord;
 }
-
 
 /* ─────────────────────────────────────────
    PRELOADER
@@ -441,7 +439,7 @@ const goToTop = () => {
 }
 
 /* ─────────────────────────────────────────
-   CV "COMING SOON" MODAL
+   CV VIEWER MODAL
    - Uses `inert` (not just aria-hidden) so the modal's contents are
      fully unreachable by keyboard/focus while closed.
    - Focus is moved into the modal on open, and back out to the
@@ -451,8 +449,6 @@ const goToTop = () => {
 ───────────────────────────────────────── */
 const cvBtn   = document.getElementById('cvBtn');
 const cvModal = document.getElementById('cvModal');
-
-
 
 function openCvModal() {
   if (!cvModal || !wrap) return;
