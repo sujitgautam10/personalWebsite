@@ -1,50 +1,29 @@
-<<<<<<< HEAD
 import * as BadWordsModule from 'https://esm.sh/bad-words';
 
-const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
-const filter = new Filter();
-
-/* words.js is git-ignored (it holds the real banned-word list) so it
-   won't exist on a fresh clone. Try it first; fall back to the tracked
-   words.example.js template so the site still works without it. */
-let ABC = [];
-try {
-  ({ ABC } = await import('./words.js'));
-} catch {
-  ({ ABC } = await import('./words.example.js'));
-}
-filter.addWords(...ABC);
-=======
 let ABC = [];
 let filter = { isProfane: () => false };
 
 Promise.all([
-  import('https://esm.sh/bad-words'),
-  import('./words.example.js')
-]).then(([BadWordsModule, wordsModule]) => {
-  const Filter = BadWordsModule.default || BadWordsModule.Filter || BadWordsModule;
+  Promise.resolve(BadWordsModule),
+  import('./words.js').catch(() => import('./words.example.js'))
+])
+.then(([BadWordsModule, wordsModule]) => {
+  const Filter =
+    BadWordsModule.default ||
+    BadWordsModule.Filter ||
+    BadWordsModule;
+
   ABC = wordsModule.ABC || [];
+
   filter = new Filter();
   filter.addWords(...ABC);
-}).catch(err => {
-  console.warn('Content filter failed to load; profanity check disabled for this session.', err);
+})
+.catch(err => {
+  console.warn(
+    'Content filter failed to load; profanity check disabled for this session.',
+    err
+  );
 });
->>>>>>> 5fff112 (fixed the error in the 1st line)
-
-const GREETING_ONLY_RE = /^(hi+|hey+|hello+|yo+|sup+|namaste|namaskar|hola)[\s!.,?]*$/i;
-function collapseSpelledOut(text) {
-  return text.replace(/(?:[a-z][\s\-_.*])+[a-z]/g, match => match.replace(/[\s\-_.*]/g, ''));
-}
-
-function hasInappropriateContent(text) {
-  const lower = text.trim().toLowerCase();
-  const collapsed = collapseSpelledOut(lower);
-
-  const containsBannedWord = ABC.some(word => collapsed.includes(word) || lower.includes(word));
-
-  return GREETING_ONLY_RE.test(lower) || filter.isProfane(lower) || containsBannedWord;
-}
-'use strict';
 
 
 /* ─────────────────────────────────────────
