@@ -650,7 +650,7 @@ img { display: block; max-width: 100%; }
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  padding: clamp(10px, 3vw, 32px);
 
   opacity: 0;
   visibility: hidden;
@@ -700,18 +700,29 @@ img { display: block; max-width: 100%; }
 .cv-modal-box {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
 
+<<<<<<< HEAD
   width: min(1100px, 92vw);
   height: min(90vh, 850px);
   max-width: none;
+=======
+  width: 100%;
+  max-width: min(94vw, 1180px);
+  height: min(92vh, 1300px);
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 
   background: var(--bg2);
   border: 1px solid var(--bdr2);
   border-radius: 16px;
+<<<<<<< HEAD
 
   padding: 0;
   display: flex;
   flex-direction: column;
+=======
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
   overflow: hidden;
 
   box-shadow: 0 30px 70px -20px rgba(0,0,0,.50);
@@ -732,6 +743,7 @@ img { display: block; max-width: 100%; }
 /* ---------- Header ---------- */
 
 .cv-modal-head {
+<<<<<<< HEAD
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -739,10 +751,29 @@ img { display: block; max-width: 100%; }
   flex-shrink: 0;
 
   padding: 16px 18px;
+=======
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
   border-bottom: 1px solid var(--bdr);
   background: var(--bg2);
 }
 
+<<<<<<< HEAD
+=======
+.cv-modal-title {
+  font-family: var(--display);
+  font-size: clamp(15px, 2vw, 18px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--txt);
+}
+
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 .cv-modal-head-actions {
   display: flex;
   align-items: center;
@@ -751,6 +782,7 @@ img { display: block; max-width: 100%; }
 }
 
 .cv-modal-download {
+<<<<<<< HEAD
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -787,6 +819,30 @@ img { display: block; max-width: 100%; }
   .cv-modal-download span { display: none; }
   .cv-modal-download { padding: 9px 11px; }
 }
+=======
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--bdr2);
+  color: var(--txt);
+  font-size: 12.5px;
+  font-weight: 600;
+  font-family: var(--font);
+  transition: background .2s, border-color .2s, color .2s, transform .2s;
+}
+.cv-modal-download::after { content: ''; position: absolute; inset: -6px; }
+.cv-modal-download:hover {
+  background: var(--acc);
+  border-color: var(--acc);
+  color: #fff;
+  transform: translateY(-1px);
+}
+.cv-modal-download span { display: inline; }
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 
 /* ---------- Close Button ---------- */
 
@@ -815,7 +871,11 @@ img { display: block; max-width: 100%; }
     border-color .25s ease,
     transform .25s ease;
 }
+<<<<<<< HEAD
 .cv-modal-close::after { content: ''; position: absolute; inset: -8px; }
+=======
+.cv-modal-close::after { content: ''; position: absolute; inset: -7px; }
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 
 .cv-modal-close:hover {
   background: var(--acc);
@@ -824,6 +884,7 @@ img { display: block; max-width: 100%; }
   transform: rotate(90deg);
 }
 
+<<<<<<< HEAD
 /* ---------- Title ---------- */
 
 .cv-modal-title {
@@ -839,19 +900,27 @@ img { display: block; max-width: 100%; }
   text-overflow: ellipsis;
 }
 
+=======
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 /* ---------- PDF Viewer ---------- */
 
 .cv-modal-viewer {
   flex: 1;
   min-height: 0;
+<<<<<<< HEAD
   width: 100%;
   background: var(--bg3);
 }
 
+=======
+  background: #4a4a4a;
+}
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 .cv-modal-viewer iframe {
   display: block;
   width: 100%;
   height: 100%;
+<<<<<<< HEAD
   min-height: 400px;
   border: 0;
 }
@@ -861,6 +930,16 @@ img { display: block; max-width: 100%; }
   .cv-modal-box { height: min(92vh, 900px); border-radius: 12px; }
   .cv-modal-head { padding: 12px 14px; }
   .cv-modal-title { font-size: 15px; }
+=======
+  border: none;
+}
+
+@media (max-width: 480px) {
+  .cv-modal-box { height: min(90vh, 1040px); border-radius: 12px; }
+  .cv-modal-head { padding: 10px 12px; }
+  .cv-modal-download span { display: none; }
+  .cv-modal-download { padding: 8px; min-width: 34px; justify-content: center; }
+>>>>>>> dc3c45fb7ca0ababdb601678f96cac8803ec3d59
 }
 
 .form-ok {
@@ -1170,6 +1249,16 @@ img { display: block; max-width: 100%; }
   overflow: visible !important;
 }
 
+/* Some mobile browsers don't shrink `dvh` for the on-screen keyboard,
+   so the section above still measures full-screen tall while the
+   keyboard eats the bottom of what's actually visible — the footer
+   then renders as if floating mid-screen instead of below the fold.
+   There's nothing useful in it to see while typing, so just hide it
+   for the duration. */
+.kb-open .footer {
+  display: none !important;
+}
+
 @media (max-width: 480px) {
   .contact-inner { justify-content: flex-start; }
   :root { --nav-h: 56px; }
@@ -1381,7 +1470,7 @@ img { display: block; max-width: 100%; }
    exceed the viewport and clip the social icons. Trims spacing only. */
 @media (min-height: 761px) and (max-height: 960px) and (max-width: 500px) and (orientation: portrait) {
   .hero-sec {
-    padding-top: calc(var(--nav-h) + 8px);
+    padding-top: calc(var(--nav-h) + 22px);
     padding-bottom: 8px;
     gap: 12px;
   }
@@ -1411,6 +1500,16 @@ img { display: block; max-width: 100%; }
   transition: opacity 0.3s var(--ease), transform 0.3s var(--ease),
               visibility 0s linear 0.3s, background 0.2s, border-color 0.2s, color 0.2s;
   -webkit-tap-highlight-color: transparent;
+}
+/* When the on-screen keyboard is open, the layout viewport doesn't shrink
+   the way the visual viewport does, so this fixed-bottom button ends up
+   floating mid-screen on top of the focused form field instead of staying
+   pinned below it. Just hide it for the duration — there's nothing useful
+   to scroll to while a field is focused anyway. */
+#scrollWrap.kb-open ~ .scroll-top-btn {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
 }
 .scroll-top-btn.show {
   opacity: 1;
