@@ -649,8 +649,13 @@
         </button>
       </div>
     </div>
-    <div class="cv-modal-viewer">
-      <iframe src="sujitcv.pdf#view=FitH" title="Sujit Gautam CV" loading="lazy"></iframe>
+    <div class="cv-modal-viewer" id="cvModalViewer">
+      <iframe data-src="sujitcv.pdf#view=FitH" title="Sujit Gautam CV" loading="lazy"></iframe>
+      <div class="cv-modal-fallback" id="cvModalFallback" hidden>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="34" height="34"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <p>This browser can't preview the PDF inline here.</p>
+        <p>Use the <strong>Download</strong> button above to open or save the CV.</p>
+      </div>
     </div>
   </div>
 </div>

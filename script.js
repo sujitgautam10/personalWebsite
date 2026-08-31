@@ -450,8 +450,38 @@ const goToTop = () => {
 const cvBtn   = document.getElementById('cvBtn');
 const cvModal = document.getElementById('cvModal');
 
+/* Most desktop browsers render PDFs inline in an <iframe> just fine;
+   most mobile browsers don't (they show a blank frame, or hand the
+   PDF off to the OS, which looks like the page "navigated away").
+   Feature-detect where possible instead of guessing from screen size,
+   so a mobile browser that *does* gain inline PDF support isn't
+   needlessly stuck with the fallback. */
+function canPreviewPdfInline() {
+  if ('pdfViewerEnabled' in navigator) return navigator.pdfViewerEnabled;
+  /* pdfViewerEnabled is Chromium-only, so everything else (desktop Safari,
+     desktop Firefox, iOS/iPadOS Safari) falls through here. iOS Safari
+     generally renders PDFs inline in an iframe fine, so screen size/pointer
+     type alone would wrongly flag it as unsupported. Android's browsers
+     are the actual documented failure case — they hand the PDF off instead
+     of rendering it — so key off Android specifically. */
+  return !/Android/i.test(navigator.userAgent || '');
+}
+
 function openCvModal() {
   if (!cvModal || !wrap) return;
+
+  const viewer   = cvModal.querySelector('.cv-modal-viewer');
+  const iframe   = viewer?.querySelector('iframe');
+  const fallback = viewer?.querySelector('.cv-modal-fallback');
+
+  if (iframe && !iframe.src) {
+    if (canPreviewPdfInline()) {
+      iframe.src = iframe.dataset.src;
+    } else {
+      viewer?.classList.add('no-preview');
+      fallback?.removeAttribute('hidden');
+    }
+  }
 
   cvModal.removeAttribute('aria-hidden');
   cvModal.removeAttribute('inert');
