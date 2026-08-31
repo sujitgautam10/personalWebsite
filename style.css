@@ -1192,6 +1192,15 @@ img { display: block; max-width: 100%; }
   display: none !important;
 }
 
+/* Pure-CSS backstop, independent of the JS above entirely: the moment
+   any field inside the contact section actually has focus, hide the
+   footer via :focus-within. This can't be defeated by a resize-event
+   race, a slow/blocked script, or visualViewport being unsupported —
+   it's driven directly by real focus state, not a height heuristic. */
+.contact-sec:focus-within .footer {
+  display: none !important;
+}
+
 @media (max-width: 480px) {
   .contact-inner { justify-content: flex-start; }
   :root { --nav-h: 56px; }

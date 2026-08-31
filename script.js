@@ -270,15 +270,24 @@ if (window.visualViewport) {
   const vv = window.visualViewport;
   const KB_THRESHOLD = 120; /* px shrink that signals the keyboard opened */
 
+  /* IMPORTANT: this listener only ever ADDS kb-open, never removes it.
+     Android fires several 'resize' events while the keyboard animates
+     open/closed, and an intermediate reading can dip back under
+     KB_THRESHOLD for a frame — a toggle(false) there would rip the
+     class off mid-typing even though the field is still focused and
+     the keyboard is still up. Removal is the blur handler's job only,
+     which is tied to an unambiguous DOM event instead of a noisy
+     height heuristic. */
   vv.addEventListener('resize', () => {
     const f = document.activeElement;
     const isField = f && (f.tagName === 'INPUT' || f.tagName === 'TEXTAREA');
     const kbOpen  = (window.innerHeight - vv.height) > KB_THRESHOLD;
 
-    wrap?.classList.toggle('kb-open', isField && kbOpen);
-    document.getElementById('contact')?.classList.toggle('kb-open', isField && kbOpen);
-
-    if (isField && kbOpen) setTimeout(revealFocusedField, 80);
+    if (isField && kbOpen) {
+      wrap?.classList.add('kb-open');
+      document.getElementById('contact')?.classList.add('kb-open');
+      setTimeout(revealFocusedField, 80);
+    }
   });
 }
 
